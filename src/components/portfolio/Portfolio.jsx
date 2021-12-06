@@ -1,9 +1,20 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import "./portfolio.scss";
+
+import PortfolioList from "../portfolioList/PortfolioList";
+import {
+  featuredPortfolio,
+  webPortfolio,
+  mobilePortfolio,
+  designPortfolio,
+  contentPortfolio,
+} from "../../data";
 
 export default function Portfolio() {
   const [selected, setSelected] = useState("featured");
+  const [data, setData] = useState([]);
 
+  /*whenever you click on the tabs, it is gonna fire the useEffect below to dynamically change content*/
   const list = [
     {
       id: "featured",
@@ -25,18 +36,38 @@ export default function Portfolio() {
       id: "content",
       title: "Content",
     },
-    {
-      id: "featured",
-      title: "Featured",
-    },
   ];
+
+  /*in this useEffect the dependency is selected because whenever we change it, it's gonna run this useEffect*/
+  /*when one tab is chose the setSelected pulls data from data.js to change content dynamically*/
+  useEffect(() => {
+    switch (selected) {
+      case "featured":
+        setData(featuredPortfolio);
+        break;
+      case "web":
+        setData(webPortfolio);
+        break;
+      case "mobile":
+        setData(mobilePortfolio);
+        break;
+      case "design":
+        setData(designPortfolio);
+        break;
+      case "content":
+        setData(contentPortfolio);
+        break;
+      default:
+        setData(featuredPortfolio);
+    }
+  }, [selected]);
 
   return (
     <div className="portfolio" id="portfolio">
       <h1>Portfolio</h1>
       <ul>
         {list.map((item) => (
-          <Portfolio
+          <PortfolioList
             title={item.title}
             active={selected === item.id}
             setSelected={setSelected}
@@ -44,49 +75,14 @@ export default function Portfolio() {
           />
         ))}
       </ul>
+      {/* the items being mapped came from data.js file*/}
       <div className="container">
-        <div className="item">
-          <img
-            src="https://www.logodesign.net/logo/piggy-bank-merged-with-a-bank-building-4574ld.png?size=2&industry=bank"
-            alt=""
-          />
-          <h3>Banking App</h3>
-        </div>
-        <div className="item">
-          <img
-            src="https://www.logodesign.net/logo/piggy-bank-merged-with-a-bank-building-4574ld.png?size=2&industry=bank"
-            alt=""
-          />
-          <h3>Banking App</h3>
-        </div>
-        <div className="item">
-          <img
-            src="https://www.logodesign.net/logo/piggy-bank-merged-with-a-bank-building-4574ld.png?size=2&industry=bank"
-            alt=""
-          />
-          <h3>Banking App</h3>
-        </div>
-        <div className="item">
-          <img
-            src="https://www.logodesign.net/logo/piggy-bank-merged-with-a-bank-building-4574ld.png?size=2&industry=bank"
-            alt=""
-          />
-          <h3>Banking App</h3>
-        </div>
-        <div className="item">
-          <img
-            src="https://www.logodesign.net/logo/piggy-bank-merged-with-a-bank-building-4574ld.png?size=2&industry=bank"
-            alt=""
-          />
-          <h3>Banking App</h3>
-        </div>
-        <div className="item">
-          <img
-            src="https://www.logodesign.net/logo/piggy-bank-merged-with-a-bank-building-4574ld.png?size=2&industry=bank"
-            alt=""
-          />
-          <h3>Banking App</h3>
-        </div>
+        {data.map((d) => (
+          <div className="item">
+            <img src={d.img} alt="" />
+            <h3>{d.title}</h3>
+          </div>
+        ))}
       </div>
     </div>
   );
