@@ -1,2 +1,11 @@
 $mainColor: #3eb489;
 $mustardYellow: #ffdb58;
+$goldColor: #ffd700;
+
+$width: 768px;
+
+@mixin mobile {
+  @media (max-width: #{$width}) {
+    @content;
+  }
+}

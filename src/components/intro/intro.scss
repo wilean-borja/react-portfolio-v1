@@ -1,8 +1,13 @@
 @import "../../global.scss";
 
 .intro {
-  background-color: white;
+  background-color: whitesmoke;
   display: flex;
+
+  @include mobile {
+    flex-direction: column;
+    align-items: center;
+  }
 
   .left {
     flex: 0.5;
@@ -12,15 +17,23 @@
       width: 800px;
       height: 800px;
       overflow: hidden;
-      background-color: lightblue;
-      border-radius: 50%;
+      //background-color: lightblue;
+      //border-radius: 50%;
       display: flex;
       align-items: flex-start;
       justify-content: center;
       float: right;
 
+      @include mobile {
+        align-items: flex-end;
+      }
+
       img {
         height: 90%;
+      }
+
+      @include mobile {
+        height: 100%;
       }
     }
   }
@@ -36,11 +49,20 @@
       display: flex;
       flex-direction: column;
       justify-content: center;
+
+      @include mobile {
+        padding-left: 0;
+        align-items: center;
+      }
     }
 
     h1 {
       font-size: 60px;
       margin: 10px 0;
+
+      @include mobile {
+        font-size: 40px;
+      }
     }
     h2 {
       font-size: 35px;
@@ -48,9 +70,13 @@
     h3 {
       font-size: 30px;
 
+      @include mobile {
+        font-size: 20px;
+      }
+
       span {
         font-size: inherit;
-        color: lightblue;
+        color: $mainColor;
       }
 
       .ityped-cursor {
@@ -72,6 +98,12 @@
     position: absolute;
     bottom: 10px;
     left: 70%;
+
+    @include mobile {
+      position: absolute;
+      bottom: 10px;
+      left: 46%;
+    }
 
     img {
       width: 30px;
